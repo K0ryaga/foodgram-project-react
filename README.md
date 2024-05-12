@@ -1,1 +1,3 @@
-# praktikum_new_diplom
+Aдресс=foodgram-ant-sty.duckdns.org
+логин админа= admin
+пароль админа= admin
