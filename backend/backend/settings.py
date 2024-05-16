@@ -8,9 +8,9 @@ dotenv.load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = 'django-insecure-+ztn)&2_o^jfuuogwltp+)@yfcqn7@b5#08r7tsa+4t_7en+p^'
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'foodgram-ant-sty.duckdns.org', '158.160.77.179']
 
 
 INSTALLED_APPS = [
