@@ -83,8 +83,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
         user = request.user
         if not user.cart.exists():
             return Response({
-                'errors': 'Ваш список покупок пуст.'
-                }, status=status.HTTP_400_BAD_REQUEST
+                'errors': 'Ваш список покупок пуст.'},
+                status=status.HTTP_400_BAD_REQUEST
             )
         ingredients = RecipeIngredient.objects.filter(
             recipe__cart__user=user).values(
