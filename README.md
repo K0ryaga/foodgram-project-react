@@ -29,10 +29,10 @@ Foodgram - Продуктовый помощник. На этом сервисе
    ```
 6. Выполните следующие команды в контейнере backend:
    ```sh
-   docker exec -it <backend_container_id> python manage.py migrate
-   docker exec -it <backend_container_id> python manage.py collectstatic
-   docker exec -it <backend_container_id> python manage.py createsuperuser
-   docker exec -it <backend_container_id> python manage.py load_ing
+   docker exec -it infra-backend-1 python manage.py migrate
+   docker exec -it infra-backend-1 python manage.py collectstatic
+   docker exec -it infra-backend-1 python manage.py createsuperuser
+   docker exec -it infra-backend-1 python manage.py load_ing
    ```
 
 Готово! Проект доступен по адресам: `http://127.0.0.1:8000` и `http://localhost:8000`.
