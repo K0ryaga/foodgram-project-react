@@ -6,12 +6,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 dotenv.load_dotenv(BASE_DIR / '.env')
 
-SECRET_KEY = 'django-insecure-+ztn)&2_o^jfuuogwltp+)@yfcqn7@b5#08r7tsa+4t_7en+p^'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+DEBUG = os.getenv('DEBUG', default='false').lower() == 'true'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', 'foodgram-ant-sty.duckdns.org', '158.160.77.179']
-
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',

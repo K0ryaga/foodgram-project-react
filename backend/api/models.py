@@ -1,6 +1,9 @@
 from colorfield.fields import ColorField
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
+
+from .constants import MIN_FIELD_VALUE, MAX_FIELD_VALUE
 
 User = get_user_model()
 
@@ -65,8 +68,12 @@ class Recipe(models.Model):
         verbose_name='Ингредиенты',
     )
     tags = models.ManyToManyField(Tag, verbose_name='Теги')
-    cooking_time = models.PositiveIntegerField(
-        verbose_name='Время приготовления'
+    cooking_time = models.PositiveSmallIntegerField(
+        verbose_name='Время приготовления',
+        validators=[
+            MinValueValidator(MIN_FIELD_VALUE),
+            MaxValueValidator(MAX_FIELD_VALUE)
+        ]
     )
 
     class Meta:
@@ -92,7 +99,13 @@ class RecipeIngredient(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Рецепт',
     )
-    amount = models.PositiveIntegerField(verbose_name='Количество')
+    amount = models.PositiveSmallIntegerField(
+        verbose_name='Количество',
+        validators=[
+            MinValueValidator(MIN_FIELD_VALUE),
+            MaxValueValidator(MAX_FIELD_VALUE)
+        ]
+    )
 
     class Meta:
         verbose_name = 'Ингредиент рецепта'
@@ -101,6 +114,10 @@ class RecipeIngredient(models.Model):
             models.UniqueConstraint(fields=['ingredient', 'recipe'],
                                     name='unique_ingredients_recipe'),
         )
+        ordering = ['id']
+
+    def __str__(self):
+        return f'{self.ingredient} - {self.recipe} - {self.amount}'
 
 
 class Favorite(models.Model):
@@ -127,6 +144,7 @@ class Favorite(models.Model):
                 fields=('recipe', 'user'),
             ),
         )
+        ordering = ['id']
 
     def __str__(self):
         return f'{self.user}/{self.recipe}'
@@ -155,6 +173,7 @@ class ShoppingCart(models.Model):
                 fields=['recipe', 'user'],
                 name='unique_user_recipe_in_cart'),
         )
+        ordering = ['id']
 
     def __str__(self):
         return f'{self.user} / {self.recipe}'
