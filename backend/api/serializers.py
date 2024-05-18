@@ -225,24 +225,30 @@ class SubscribeSerializer(serializers.ModelSerializer):
     recipes = serializers.SerializerMethodField()
     recipes_count = serializers.SerializerMethodField()
 
-    class Meta: 
-        model = Subscription 
+    class Meta:
+        model = Subscription
         fields = ('id', 'email', 'username', 'first_name', 'last_name',
                   'is_subscribed', 'recipes', 'recipes_count')
 
-    def get_is_subscribed(self, obj): 
-        return Subscription.objects.filter(
-            user=obj.user, author=obj.author
-        ).exists()
+    def validate(self, data):
+        user = self.context['request'].user
+        author = data['author']
+        if user == author:
+            raise serializers.ValidationError(
+                'Вы не можете подписаться на самого себя.')
+        return data
 
-    def get_recipes(self, obj): 
+    def get_is_subscribed(self, obj):
+        user = self.context['request'].user
+        return user.subscriptions.filter(author=obj.author).exists()
+
+    def get_recipes(self, obj):
         request = self.context.get('request')
         limit = request.GET.get('recipes_limit')
-        queryset = Recipe.objects.filter(author=obj.author)
+        queryset = obj.author.recipes.all()
         if limit:
             queryset = queryset[:int(limit)]
         return ShortRecipeSerializer(queryset, many=True).data
 
     def get_recipes_count(self, obj):
-
-        return Recipe.objects.filter(author=obj.author).count()
+        return obj.author.recipes.count()
