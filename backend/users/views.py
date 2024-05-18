@@ -24,7 +24,7 @@ class UserViewSet(UserViewSet):
     @action(detail=True, methods=('post',),
             permission_classes=(IsAuthenticated,))
     def subscribe(self, request, id=None):
-        user = request.user 
+        user = request.user
         author = get_object_or_404(User, id=id)
 
         if user == author:
