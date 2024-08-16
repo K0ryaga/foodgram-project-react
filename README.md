@@ -102,11 +102,3 @@ Foodgram - Продуктовый помощник. На этом сервисе
 Студент Яндекс.Практикума Антон Стыврин
 
 [GitHub](https://github.com/K0ryaga)
-
-## Информация для ревьюера
-
-- **Server IP**: 158.160.77.179:8000
-- **Domain**: [foodgram-ant-sty.duckdns.org](https://foodgram-ant-sty.duckdns.org)
-- **Admin Login**: admin
-- **Admin Email**: admin@gmail.com
-- **Admin Password**: admin
